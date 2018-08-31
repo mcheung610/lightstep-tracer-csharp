@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+    - image: microsoft/dotnet:2.1-sdk
+    steps:
+    - checkout
+    - run: dotnet clean
+    - run: dotnet restore
+    - run: dotnet build src/LightStep/LightStep.csproj -f netstandard2.0
+    - run: dotnet build test/LightStep.Tests/LightStep.Tests.csproj -f netcoreapp2.1
+    - run: dotnet test test/LightStep.Tests/LightStep.Tests.csproj -f netcoreapp2.1
+    - run: dotnet pack src/LightStep/LightStep.csproj
+    - store_artifacts:
+        path: src/LightStep/bin/Release/*.nupkg

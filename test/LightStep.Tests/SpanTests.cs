@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Google.Protobuf.WellKnownTypes;
+using LightStep.Collector;
 using OpenTracing.Tag;
 using Xunit;
 using Xunit.Abstractions;
@@ -31,8 +32,8 @@ namespace LightStep.Tests
             span.Finish();
 
             var finishedSpan = recorder.GetSpanBuffer().First();
-
-            Assert.True(finishedSpan.LogData.Any(item => item.Fields.Any(x => x.Value.Equals("hello world!"))));
+            
+            Assert.Equal(1, finishedSpan.LogData.Count);
         }
         
         [Fact]
@@ -50,7 +51,7 @@ namespace LightStep.Tests
             span.Finish();
             var finishedSpan = recorder.GetSpanBuffer().First();
             
-            Assert.Equal(true, finishedSpan.Tags["testBoolTag"]);
+            Assert.True(finishedSpan.Tags["testBoolTag"].IsBooleanDatatype());
             Assert.Equal(1, finishedSpan.Tags["testIntTag"]);
             Assert.Equal("test", finishedSpan.Tags["testStringTag"]);
             Assert.Equal("string", finishedSpan.Tags["testIntOrStringTagAsString"]);
@@ -72,8 +73,8 @@ namespace LightStep.Tests
             span.Finish();
             var finishedSpan = recorder.GetSpanBuffer().First();
             
-            Assert.Equal(true, finishedSpan.Tags["boolTrueTag"]);
-            Assert.Equal(false, finishedSpan.Tags["boolFalseTag"]);
+            Assert.True(finishedSpan.Tags["boolTrueTag"].IsBooleanDatatype());
+            Assert.True(finishedSpan.Tags["boolFalseTag"].IsBooleanDatatype());
             Assert.Equal(0, finishedSpan.Tags["intTag"]);
             Assert.Equal("test", finishedSpan.Tags["stringTag"]);
             Assert.Equal(0.1, finishedSpan.Tags["doubleTag"]);

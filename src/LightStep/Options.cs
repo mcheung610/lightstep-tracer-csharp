@@ -51,7 +51,7 @@ namespace LightStep
             compName = Environment.GetEnvironmentVariable("LS_COMPONENT");
             #endif
             #if NETSTANDARD2_0 || NET45
-            compName = Assembly.GetEntryAssembly().GetName().Name;
+            compName = Assembly.GetExecutingAssembly().GetName().Name;
             #endif
             return compName;
         }
