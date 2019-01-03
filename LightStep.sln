@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightStep.CSharpAspectTestA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightStep.CSharpDITestApp", "examples\LightStep.CSharpDITestApp\LightStep.CSharpDITestApp.csproj", "{358E688A-D19E-4149-85CD-E804738C0C3F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightStep.Tests.Conformance", "test\LightStep.Tests.Conformance\LightStep.Tests.Conformance.csproj", "{C4AB28B4-3639-4AA6-A2C3-8C35257C9115}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{358E688A-D19E-4149-85CD-E804738C0C3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{358E688A-D19E-4149-85CD-E804738C0C3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{358E688A-D19E-4149-85CD-E804738C0C3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4AB28B4-3639-4AA6-A2C3-8C35257C9115}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4AB28B4-3639-4AA6-A2C3-8C35257C9115}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4AB28B4-3639-4AA6-A2C3-8C35257C9115}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4AB28B4-3639-4AA6-A2C3-8C35257C9115}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +65,7 @@ Global
 		{65A11CA6-E7E9-43B6-A36D-6B54EA9BD758} = {113EDBB5-081F-4581-B687-9293B4D74312}
 		{1B83F7CF-E2AA-4A81-9C0B-2DA716D5C982} = {113EDBB5-081F-4581-B687-9293B4D74312}
 		{358E688A-D19E-4149-85CD-E804738C0C3F} = {113EDBB5-081F-4581-B687-9293B4D74312}
+		{C4AB28B4-3639-4AA6-A2C3-8C35257C9115} = {1359ACF9-43F2-4E09-94FD-32EB2C6239BA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0890664C-9CE4-4960-90A4-AD6565C970E3}

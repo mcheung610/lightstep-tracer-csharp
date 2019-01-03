@@ -81,6 +81,14 @@ Task("Test")
         }
 });
 
+Task("Conformance")
+	.IsDependentOn("Build")
+	.Does(() => 
+	{
+		// cd to conformance test
+		// run `sh gopath/bin/runner dotnet run`
+	});
+
 Task("Publish")
     .IsDependentOn("Test")
 	.WithCriteria(() => EnvironmentVariable("CI") == "true")
