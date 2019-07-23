@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -79,11 +80,11 @@ namespace LightStep.Collector
         {
             // force net45 to attempt tls12 first and fallback appropriately
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-            
+
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/octet-stream"));
-            
+
             var requestMessage = BuildRequest(report);
 
             ReportResponse responseValue;
@@ -93,6 +94,15 @@ namespace LightStep.Collector
                 var response = await _client.SendAsync(requestMessage);
                 response.EnsureSuccessStatusCode();
                 var responseData = await response.Content.ReadAsStreamAsync();
+                byte[] bytes;
+                using (var memoryStream = new MemoryStream())
+                {
+                    responseData.CopyTo(memoryStream);
+                    bytes = memoryStream.ToArray();
+                }
+
+                string base64 = Convert.ToBase64String(bytes);;
+                _logger.Info($"status: {response.StatusCode} response data: {base64}");
                 responseValue = ReportResponse.Parser.ParseFrom(responseData);
                 _logger.Debug($"Report HTTP Response {response.StatusCode}");
             }
@@ -113,7 +123,7 @@ namespace LightStep.Collector
                 _logger.WarnException("Unknown error sending report.", ex);
                 throw;
             }
-            
+
             return responseValue;
         }
 
@@ -138,7 +148,7 @@ namespace LightStep.Collector
             };
             _options.Tags.ToList().ForEach(t => request.Reporter.Tags.Add(new KeyValue().MakeKeyValueFromKvp(t)));
             spanBuffer.GetSpans().ToList().ForEach(span => {
-                try 
+                try
                 {
                     request.Spans.Add(new Span().MakeSpanFromSpanData(span));
                 }
@@ -159,7 +169,7 @@ namespace LightStep.Collector
 
             timer.Stop();
             _logger.Debug($"Serialization complete in {timer.ElapsedMilliseconds}ms. Request size: {request.CalculateSize()}b.");
-            
+
             return request;
         }
     }
